@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Attack on Anime VR Experience</title>
+
+  <!-- A-Frame VR + Physics -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <!-- Game Scripts -->
+  <script src="hands.js"></script>  <!-- ODM Hooks -->
+  <script src="play.js"></script>   <!-- Player movement -->
+  <script src="web.js"></script>    <!-- Hook physics -->
+  <script src="map.js"></script>    <!-- City map -->
+
+  <!-- Optional: audio and gradient -->
+  <script src="gradient.js"></script>
+  <script src="radio.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; font-family: sans-serif; }
+    #instructions {
+      position: absolute;
+      z-index: 1;
+      top: 10%;
+      left: 5%;
+      right: 5%;
+      padding: 1%;
+      background-color: rgba(164, 0, 0, 0.8);
+      color: white;
+      font-size: 18px;
+      line-height: 1.4;
+      border-radius: 8px;
+    }
+    #instructions a { color: #fff; text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <div id="instructions">
+    <p><strong>Movement:</strong> Swipe or use joystick to move. Tap hooks to shoot ODM gear.</p>
+    <p><strong>Combat:</strong> Slash Titans with your blades. Aim for the nape!</p>
+    <p><strong>Gas:</strong> Use sparingly to swing further or boost speed.</p>
+    <p><strong>Goal:</strong> Defeat Titans and survive the city rooftops!</p>
+    <p style="font-size: 12px;">Fan-made - open source - <a href="https://github.com/talkol/spiderman" target="_blank">Source Repo</a></p>
+  </div>
+
+  <a-scene
+    renderer="highRefreshRate: false; colorManagement: true;"
+    fog="type: linear; color: #eafaff; far: 500;"
+    background="color: #eafaff;"
+    vr-mode-ui="enabled: true"
+  >
+    <!-- Sky -->
+    <a-sky color="#87ceeb"></a-sky>
+
+    <!-- Lighting -->
+    <a-entity light="type: ambient; color: #e8e8e8"></a-entity>
+    <a-entity light="type: directional; color: #fff; intensity: 0.6;" position="-0.5 1 1"></a-entity>
+
+    <!-- Assets -->
+    <a-assets>
+      <!-- Buildings -->
+      <img id="building1" src="assets/aot_building1.jpg" preload="auto">
+      <img id="building2" src="assets/aot_building2.jpg" preload="auto">
+      <img id="ground" src="assets/aot_ground.jpg" preload="auto">
+      <img id="roof" src="assets/aot_roof.jpg" preload="auto">
+      <!-- Titans -->
+      <a-asset-item id="titan-model" src="assets/titan.glb" preload="auto"></a-asset-item>
+      <!-- Audio -->
+      <audio id="sound-hook" src="assets/shoot-odm.mp3" preload="auto"></audio>
+      <audio id="sound-no-gas" src="assets/no-gas.mp3" preload="auto"></audio>
+      <audio id="sound-hit-wall" src="assets/hit-building.mp3" preload="auto"></audio>
+      <audio id="sound-land" src="assets/land.mp3" preload="auto"></audio>
+    </a-assets>
+
+    <!-- Map -->
+    <a-entity id="map" map="" pool="size:50; container:#map;"></a-entity>
+
+    <!-- Player -->
+    <a-entity player="mass:70" position="0 2 0"></a-entity>
+
+    <!-- ODM Hooks -->
+    <a-entity id="hook-right" odm="" position="0 0 0"></a-entity>
+    <a-entity id="hook-left" odm="" position="0 0 0"></a-entity>
+
+    <!-- Optional background music -->
+    <a-entity radio="tracks: 516082875,495963048; weights: 50,50;"></a-entity>
+  </a-scene>
+</body>
+</html>
